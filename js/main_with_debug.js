@@ -67,6 +67,8 @@ function cities(){			// function definition
 
 	// add ways the page can react to user interaction
 	addEvents();
+
+	debugAjax();
 };
 
 window.onload = initialize();
@@ -132,4 +134,33 @@ function addEvents() {
 			alert('Hey, you clicked me!');
 		}
 	);
+
+	function debugCallback(response){
+		document.querySelector("#mydiv")
+			.insertAdjacentHTML('beforeend', 
+				'GeoJSON data: ' + JSON.stringify(myData))
+	};
+};
+
+function debugAjax() {
+	//define a variable to hold the data
+    var myData;
+
+    //basic fetch
+    fetch('data/MegaCities.geojson')
+        .then(function(response){
+            return response.json();
+        }) 
+        .then(function(response){
+            myData = response;
+
+            //check the data
+            console.log(myData);
+
+			document.querySelector("#mydiv")
+				.insertAdjacentHTML(
+					'beforeend', 
+					'<br>GeoJSON data:<br>' + JSON.stringify(myData)
+				);
+        });
 };
